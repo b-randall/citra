@@ -309,13 +309,23 @@
       </item>
       <item>
        <widget class="QCheckBox" name="toggle_dump_textures">
-        <property name="toolTip">
-         <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dump textures to PNG files.&lt;/p&gt;&lt;p&gt;Textures are dumped to dump/textures/[Title ID]/.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-        </property>
-        <property name="text">
-         <string>Dump Textures</string>
-        </property>
-       </widget>
+         <property name="toolTip">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Dump textures to PNG files.&lt;/p&gt;&lt;p&gt;Textures are dumped to dump/textures/[Title ID]/.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+         <property name="text">
+          <string>Dump Textures</string>
+         </property>
+        </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="toggle_exclude_large_textures">
+         <property name="toolTip">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Excludes large textures from being dumped.&lt;/p&gt;&lt;p&gt;Useful when dumping games that use render to texture screen effects.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+         <property name="text">
+          <string>Exclude Large Textures</string>
+         </property>
+        </widget>
       </item>
       <item>
        <widget class="QCheckBox" name="toggle_preload_textures">

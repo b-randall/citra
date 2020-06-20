@@ -735,20 +735,19 @@ void CachedSurface::DumpTexture(GLuint target_tex, u64 tex_hash) {
                     tex_hash, width, height);
         return;
     }
-
     // Dump texture to RGBA8 and encode as PNG
     const auto& image_interface = Core::System::GetInstance().GetImageInterface();
     auto& custom_tex_cache = Core::System::GetInstance().CustomTexCache();
-    std::string dump_path =
-        fmt::format("{}textures/{:016X}/", FileUtil::GetUserPath(FileUtil::UserPath::DumpDir),
-                    Core::System::GetInstance().Kernel().GetCurrentProcess()->codeset->program_id);
+    std::string dump_path = fmt::format(
+        "{}textures/{:016X}/", FileUtil::GetUserPath(FileUtil::UserPath::DumpDir),
+        Core::System::GetInstance().Kernel().GetCurrentProcess()->codeset->program_id);
     if (!FileUtil::CreateFullPath(dump_path)) {
         LOG_ERROR(Render, "Unable to create {}", dump_path);
         return;
     }
 
     dump_path += fmt::format("tex1_{}x{}_{:016X}_{}.png", width, height, tex_hash,
-                             static_cast<u32>(pixel_format));
+                                static_cast<u32>(pixel_format));
     if (!custom_tex_cache.IsTextureDumped(tex_hash) && !FileUtil::Exists(dump_path)) {
         custom_tex_cache.SetTextureDumped(tex_hash);
 
@@ -757,20 +756,19 @@ void CachedSurface::DumpTexture(GLuint target_tex, u64 tex_hash) {
         decoded_texture.resize(width * height * 4);
         glBindTexture(GL_TEXTURE_2D, target_tex);
         /*
-           GetTexImageOES is used even if not using OpenGL ES to work around a small issue that
-           happens if using custom textures with texture dumping at the same.
-           Let's say there's 2 textures that are both 32x32 and one of them gets replaced with a
-           higher quality 256x256 texture. If the 256x256 texture is displayed first and the 32x32
-           texture gets uploaded to the same underlying OpenGL texture, the 32x32 texture will
-           appear in the corner of the 256x256 texture.
-           If texture dumping is enabled and the 32x32 is undumped, Citra will attempt to dump it.
-           Since the underlying OpenGL texture is still 256x256, Citra crashes because it thinks the
-           texture is only 32x32.
-           GetTexImageOES conveniently only dumps the specified region, and works on both
-           desktop and ES.
+            GetTexImageOES is used even if not using OpenGL ES to work around a small issue that
+            happens if using custom textures with texture dumping at the same.
+            Let's say there's 2 textures that are both 32x32 and one of them gets replaced with a
+            higher quality 256x256 texture. If the 256x256 texture is displayed first and the
+            32x32 texture gets uploaded to the same underlying OpenGL texture, the 32x32 texture
+            will appear in the corner of the 256x256 texture. If texture dumping is enabled and
+            the 32x32 is undumped, Citra will attempt to dump it. Since the underlying OpenGL
+            texture is still 256x256, Citra crashes because it thinks the texture is only 32x32.
+            GetTexImageOES conveniently only dumps the specified region, and works on both
+            desktop and ES.
         */
         GetTexImageOES(GL_TEXTURE_2D, 0, GL_RGBA, GL_UNSIGNED_BYTE, height, width, 0,
-                       &decoded_texture[0], decoded_texture.size());
+                        &decoded_texture[0], decoded_texture.size());
         glBindTexture(GL_TEXTURE_2D, 0);
         Common::FlipRGBA8Texture(decoded_texture, width, height);
         if (!image_interface->EncodePNG(dump_path, decoded_texture, width, height))
@@ -854,8 +852,10 @@ void CachedSurface::UploadGLTexture(Common::Rectangle<u32> rect, GLuint read_fb_
     }
 
     glPixelStorei(GL_UNPACK_ROW_LENGTH, 0);
-    if (Settings::values.dump_textures && !is_custom)
-        DumpTexture(target_tex, tex_hash);
+    if (Settings::values.dump_textures && !is_custom) {
+        if (!(Settings::values.exclude_large_textures && width == 512 && height == 512))
+            DumpTexture(target_tex, tex_hash);
+    }
 
     cur_state.texture_units[0].texture_2d = old_tex;
     cur_state.Apply();

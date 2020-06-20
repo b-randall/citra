@@ -204,6 +204,10 @@ upright_screen =
 # 0 (default): Off, 1: On
 dump_textures =
 
+#Exlcudes dumping texture 512x512 or larger
+#0 (default): Off, 1: On
+exclude_large_textures =
+
 # Reads PNG files from load/textures/[Title ID]/ and replaces textures.
 # 0 (default): Off, 1: On
 custom_textures =

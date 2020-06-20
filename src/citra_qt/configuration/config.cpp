@@ -57,7 +57,7 @@ const std::array<std::array<int, 5>, Settings::NativeAnalog::NumAnalogs> Config:
 // This must be in alphabetical order according to action name as it must have the same order as
 // UISetting::values.shortcuts, which is alphabetically ordered.
 // clang-format off
-const std::array<UISettings::Shortcut, 23> default_hotkeys{
+const std::array<UISettings::Shortcut, 24> default_hotkeys{
     {{QStringLiteral("Advance Frame"),            QStringLiteral("Main Window"), {QStringLiteral("\\"), Qt::ApplicationShortcut}},
      {QStringLiteral("Capture Screenshot"),       QStringLiteral("Main Window"), {QStringLiteral("Ctrl+P"), Qt::ApplicationShortcut}},
      {QStringLiteral("Continue/Pause Emulation"), QStringLiteral("Main Window"), {QStringLiteral("F4"), Qt::WindowShortcut}},
@@ -80,7 +80,8 @@ const std::array<UISettings::Shortcut, 23> default_hotkeys{
      {QStringLiteral("Toggle Screen Layout"),     QStringLiteral("Main Window"), {QStringLiteral("F10"), Qt::WindowShortcut}},
      {QStringLiteral("Toggle Speed Limit"),       QStringLiteral("Main Window"), {QStringLiteral("Ctrl+Z"), Qt::ApplicationShortcut}},
      {QStringLiteral("Toggle Status Bar"),        QStringLiteral("Main Window"), {QStringLiteral("Ctrl+S"), Qt::WindowShortcut}},
-     {QStringLiteral("Toggle Texture Dumping"),   QStringLiteral("Main Window"), {QStringLiteral("Ctrl+D"), Qt::ApplicationShortcut}}}};
+     {QStringLiteral("Toggle Texture Dumping"),   QStringLiteral("Main Window"), {QStringLiteral("Ctrl+D"), Qt::ApplicationShortcut}},
+     {QStringLiteral("Toggle Exclude Large Texture"),   QStringLiteral("Main Window"), {QStringLiteral("Ctrl+E"), Qt::ApplicationShortcut}}}};
 // clang-format on
 
 void Config::ReadValues() {
@@ -280,6 +281,7 @@ void Config::ReadUtilityValues() {
     qt_config->beginGroup(QStringLiteral("Utility"));
 
     Settings::values.dump_textures = ReadSetting(QStringLiteral("dump_textures"), false).toBool();
+    Settings::values.exclude_large_textures = ReadSetting(QStringLiteral("exclude_large_textures"), false).toBool();
     Settings::values.custom_textures =
         ReadSetting(QStringLiteral("custom_textures"), false).toBool();
     Settings::values.preload_textures =
@@ -830,6 +832,7 @@ void Config::SaveUtilityValues() {
     qt_config->beginGroup(QStringLiteral("Utility"));
 
     WriteSetting(QStringLiteral("dump_textures"), Settings::values.dump_textures, false);
+    WriteSetting(QStringLiteral("exclude_large_textures"), Settings::values.dump_textures, false);
     WriteSetting(QStringLiteral("custom_textures"), Settings::values.custom_textures, false);
     WriteSetting(QStringLiteral("preload_textures"), Settings::values.preload_textures, false);
     WriteSetting(QStringLiteral("use_disk_shader_cache"), Settings::values.use_disk_shader_cache,

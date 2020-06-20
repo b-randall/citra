@@ -94,6 +94,7 @@ void LogSettings() {
     LogSetting("Layout_SwapScreen", Settings::values.swap_screen);
     LogSetting("Layout_UprightScreen", Settings::values.upright_screen);
     LogSetting("Utility_DumpTextures", Settings::values.dump_textures);
+    LogSetting("Utility_DumpTextures", Settings::values.exclude_large_textures);
     LogSetting("Utility_CustomTextures", Settings::values.custom_textures);
     LogSetting("Utility_UseDiskShaderCache", Settings::values.use_disk_shader_cache);
     LogSetting("Audio_EnableDspLle", Settings::values.enable_dsp_lle);

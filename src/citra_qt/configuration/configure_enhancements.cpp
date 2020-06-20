@@ -70,6 +70,7 @@ void ConfigureEnhancements::SetConfiguration() {
                                              Settings::values.use_disk_shader_cache);
     ui->upright_screen->setChecked(Settings::values.upright_screen);
     ui->toggle_dump_textures->setChecked(Settings::values.dump_textures);
+    ui->toggle_exclude_large_textures->setChecked(Settings::values.exclude_large_textures);
     ui->toggle_custom_textures->setChecked(Settings::values.custom_textures);
     ui->toggle_preload_textures->setChecked(Settings::values.preload_textures);
     bg_color = QColor::fromRgbF(Settings::values.bg_red, Settings::values.bg_green,
@@ -121,6 +122,7 @@ void ConfigureEnhancements::ApplyConfiguration() {
         Settings::values.use_hw_shader && ui->toggle_disk_shader_cache->isChecked();
     Settings::values.upright_screen = ui->upright_screen->isChecked();
     Settings::values.dump_textures = ui->toggle_dump_textures->isChecked();
+    Settings::values.exclude_large_textures = ui->toggle_exclude_large_textures->isChecked();
     Settings::values.custom_textures = ui->toggle_custom_textures->isChecked();
     Settings::values.preload_textures = ui->toggle_preload_textures->isChecked();
     Settings::values.bg_red = static_cast<float>(bg_color.redF());

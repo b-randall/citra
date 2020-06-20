@@ -183,6 +183,7 @@ struct Values {
     std::string pp_shader_name;
 
     bool dump_textures;
+    bool exclude_large_textures;
     bool custom_textures;
     bool preload_textures;
 

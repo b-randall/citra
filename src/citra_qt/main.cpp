@@ -499,6 +499,9 @@ void GMainWindow::InitializeHotkeys() {
     connect(hotkey_registry.GetHotkey(main_window, QStringLiteral("Toggle Texture Dumping"), this),
             &QShortcut::activated, this,
             [&] { Settings::values.dump_textures = !Settings::values.dump_textures; });
+    connect(hotkey_registry.GetHotkey(main_window, QStringLiteral("Toggle Exclude Large Texture"), this),
+            &QShortcut::activated, this,
+            [&] { Settings::values.exclude_large_textures = !Settings::values.exclude_large_textures; });
     // We use "static" here in order to avoid capturing by lambda due to a MSVC bug, which makes
     // the variable hold a garbage value after this function exits
     static constexpr u16 SPEED_LIMIT_STEP = 5;
